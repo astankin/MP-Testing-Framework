@@ -19,8 +19,8 @@ class TestEditEquipment:
     description = "Edited Equipment"
     eq_type = {
         "Hand power tool": "Measuring tool",
-        "Measuring tool": "Measuring tool",
-        "Machine": "Measuring tool",
+        "Measuring tool": "Machine",
+        "Machine": "Hand power tool",
     }
 
     def open_edit_equipment_page(self, setup):
@@ -58,6 +58,14 @@ class TestEditEquipment:
         self.edit_equipment_page.click_on_add_btn()
         edited_eq_type = self.equipment_list_page.get_equipment_type()
         assert edited_eq_type == self.eq_type[eq_type]
+
+        eq_type = self.equipment_list_page.get_equipment_type()
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page.select_type(self.eq_type[eq_type])
+        self.edit_equipment_page.click_on_add_btn()
+        edited_eq_type = self.equipment_list_page.get_equipment_type()
+        assert edited_eq_type == self.eq_type[eq_type]
+
 
 
 
