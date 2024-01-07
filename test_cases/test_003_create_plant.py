@@ -39,7 +39,6 @@ class TestCreatePlant:
         assert last_created_plant == self.plant_name
         self.logger.info("Creation of Plant PASSED")
 
-    @pytest.mark.plant
     def test_create_plant_with_valid_data_click_cancel(self, setup):
         self.driver = setup
         open_form(self.driver, self.base_url, self.logger, self.login_username, self.login_password)
