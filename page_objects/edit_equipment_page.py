@@ -12,6 +12,9 @@ class EditEquipmentPage(CreateEquipmentPage):
     def clear_description_field(self):
         self.driver.find_element(By.ID, self.description_id).clear()
 
+    def clear_value_field(self):
+        self.driver.find_element(By.ID, self.acquisition_value_id).clear()
+
 
 
 
