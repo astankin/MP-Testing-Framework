@@ -28,3 +28,12 @@ class EquipmentInfoPage:
         close_btn = self.modal.find_element(By.XPATH, self.close_btn_xpath)
         close_btn.click()
 
+    def get_currency(self):
+        currency = self.get_value().split()[1]
+        return currency
+
+    def get_year_of_manufacturing(self):
+        year = self.modal.find_element(By.XPATH, self.manuf_year_xpath).text
+        return year
+
+
