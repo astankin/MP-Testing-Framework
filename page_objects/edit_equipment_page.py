@@ -21,5 +21,14 @@ class EditEquipmentPage(CreateEquipmentPage):
     def clear_manufacturer_field(self):
         self.driver.find_element(By.ID, self.manufacturer_id).clear()
 
+    def clear_model_number_field(self):
+        self.driver.find_element(By.ID, self.model_number_id).clear()
+
+    def clear_part_number_field(self):
+        self.driver.find_element(By.ID, self.part_number_id).clear()
+
+    def clear_serial_number_field(self):
+        self.driver.find_element(By.ID, self.serial_number_id).clear()
+
 
 

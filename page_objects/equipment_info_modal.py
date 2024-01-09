@@ -12,6 +12,8 @@ class EquipmentInfoPage:
     manufacturer_xpath = ".//tr[2]/td[2]"
     model_num_xpath = ".//tr[3]/td[2]"
     manuf_year_xpath = ".//tr[4]/td[2]"
+    part_num_xpath = ".//tr[6]/td[2]"
+    serial_number_xpath = ".//tr[5]/td[2]"
 
     value_xpath = "//*[@id='myModal26']/div/div/div[2]/table/tbody/tr[9]/td[2]"
     close_btn_xpath = f"//*[@id='myModal{eq_id}']/div/div/div[3]/button"
@@ -40,4 +42,15 @@ class EquipmentInfoPage:
         manufacturer = self.modal.find_element(By.XPATH, self.manufacturer_xpath).text
         return manufacturer
 
+    def get_model_number(self):
+        model_number = self.modal.find_element(By.XPATH, self.model_num_xpath).text
+        return model_number
+
+    def get_part_number(self):
+        part_number = self.modal.find_element(By.XPATH, self.part_num_xpath).text
+        return part_number
+
+    def get_serial_number(self):
+        serial_number = self.modal.find_element(By.XPATH, self.serial_number_xpath).text
+        return serial_number
 

@@ -28,6 +28,9 @@ class TestEditEquipment:
     new_currency = "USD"
     new_year = "1983"
     new_manufacturer = "Edited Manufacturer"
+    new_model_num = "EditeDNum123456789"
+    new_part_num = "123456789"
+    new_serial_num = "987654321"
 
     def open_edit_equipment_page(self, setup):
         open_form(setup, self.base_url, self.logger, self.login_username, self.login_password)
@@ -109,7 +112,6 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert year_of_man == self.new_year
 
-    @pytest.mark.current
     def test_edit_manufacturer(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -122,6 +124,49 @@ class TestEditEquipment:
         manufacturer = self.info_page.get_manufacturer()
         self.info_page.click_close_btn()
         assert manufacturer == self.new_manufacturer
+
+    def test_edit_model_number(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        self.edit_equipment_page.clear_model_number_field()
+        self.edit_equipment_page.set_model_number(self.new_model_num)
+        self.edit_equipment_page.click_on_add_btn()
+        self.equipment_list_page.click_info_btn()
+        self.info_page = EquipmentInfoPage(setup)
+        model_num = self.info_page.get_model_number()
+        self.info_page.click_close_btn()
+        assert model_num == self.new_model_num
+
+    def test_edit_part_number(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        self.edit_equipment_page.clear_part_number_field()
+        self.edit_equipment_page.set_part_number(self.new_part_num)
+        self.edit_equipment_page.click_on_add_btn()
+        self.equipment_list_page.click_info_btn()
+        self.info_page = EquipmentInfoPage(setup)
+        part_num = self.info_page.get_part_number()
+        self.info_page.click_close_btn()
+        assert part_num == self.new_part_num
+
+    @pytest.mark.current
+    def test_edit_serial_number(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        self.edit_equipment_page.clear_serial_number_field()
+        self.edit_equipment_page.set_serial_number(self.new_serial_num)
+        self.edit_equipment_page.click_on_add_btn()
+        self.equipment_list_page.click_info_btn()
+        self.info_page = EquipmentInfoPage(setup)
+        serial_num = self.info_page.get_serial_number()
+        self.info_page.click_close_btn()
+        assert serial_num == self.new_serial_num
+
+
+
 
 
 
