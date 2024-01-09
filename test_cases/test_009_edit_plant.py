@@ -1,3 +1,5 @@
+from time import sleep
+
 import pytest
 from page_objects.edit_plant_page import EditPlantPage
 from page_objects.home_page import HomePage
@@ -16,7 +18,7 @@ class TestEditPlant:
     login_password = ReadConfig.get_password()
     tr_idx = 2
     edit_plant_name = "LIEBHERR"
-    plant_id = 53
+    plant_id = 54
     edit_city = "Dungannon"
     edit_address = "Edited Address"
     edit_cost_center = generate_random_word(3)
@@ -32,6 +34,7 @@ class TestEditPlant:
 
     def test_edit_plant_name(self, setup):
         self.open_edit_plant_page(setup)
+        self.edit_plant_page.edit_name(self.edit_plant_name)
         self.edit_plant_page.click_on_update_btn()
         edited_plant = self.plants_list_page.get_plants_info(1)[-1]
         assert edited_plant == self.edit_plant_name

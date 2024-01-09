@@ -68,7 +68,6 @@ class TestEditEquipment:
         edited_eq_type = self.equipment_list_page.get_equipment_type()
         assert edited_eq_type == self.eq_type[eq_type]
 
-    @pytest.mark.current
     def test_edit_acquisition_value(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
