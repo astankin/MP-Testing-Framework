@@ -36,4 +36,8 @@ class EquipmentInfoPage:
         year = self.modal.find_element(By.XPATH, self.manuf_year_xpath).text
         return year
 
+    def get_manufacturer(self):
+        manufacturer = self.modal.find_element(By.XPATH, self.manufacturer_xpath).text
+        return manufacturer
+
 

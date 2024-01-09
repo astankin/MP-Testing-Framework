@@ -18,7 +18,8 @@ class EditEquipmentPage(CreateEquipmentPage):
     def clear_year_field(self):
         self.driver.find_element(By.ID, self.year_id).clear()
 
-
+    def clear_manufacturer_field(self):
+        self.driver.find_element(By.ID, self.manufacturer_id).clear()
 
 
 

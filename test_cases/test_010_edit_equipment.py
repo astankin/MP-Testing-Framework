@@ -27,6 +27,7 @@ class TestEditEquipment:
     new_value = generate_random_number()
     new_currency = "USD"
     new_year = "1983"
+    new_manufacturer = "Edited Manufacturer"
 
     def open_edit_equipment_page(self, setup):
         open_form(setup, self.base_url, self.logger, self.login_username, self.login_password)
@@ -95,7 +96,6 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert currency == self.new_currency
 
-    @pytest.mark.current
     def test_edit_year_of_manufacturing(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -108,6 +108,20 @@ class TestEditEquipment:
         year_of_man = self.info_page.get_year_of_manufacturing()
         self.info_page.click_close_btn()
         assert year_of_man == self.new_year
+
+    @pytest.mark.current
+    def test_edit_manufacturer(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        self.edit_equipment_page.clear_manufacturer_field()
+        self.edit_equipment_page.set_manufacturer(self.new_manufacturer)
+        self.edit_equipment_page.click_on_add_btn()
+        self.equipment_list_page.click_info_btn()
+        self.info_page = EquipmentInfoPage(setup)
+        manufacturer = self.info_page.get_manufacturer()
+        self.info_page.click_close_btn()
+        assert manufacturer == self.new_manufacturer
 
 
 
