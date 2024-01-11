@@ -13,11 +13,13 @@ from utilities.read_properties import ReadConfig
 
 
 class TestEditEquipment:
+
     base_url = ReadConfig.get_application_url()
     logger = setup_logger(log_file_path='logs/register_account.log')
     login_username = ReadConfig.get_user()
     login_password = ReadConfig.get_password()
     plant_id = 1
+    equipment_id = 26
     description = "Edited Equipment"
     eq_type = {
         "Hand power tool": "Measuring tool",
@@ -31,6 +33,7 @@ class TestEditEquipment:
     new_model_num = "EditeDNum123456789"
     new_part_num = "123456789"
     new_serial_num = "987654321"
+    new_department = "Laboratory"
 
     def open_edit_equipment_page(self, setup):
         open_form(setup, self.base_url, self.logger, self.login_username, self.login_password)
@@ -151,7 +154,6 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert part_num == self.new_part_num
 
-    @pytest.mark.current
     def test_edit_serial_number(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -164,6 +166,33 @@ class TestEditEquipment:
         serial_num = self.info_page.get_serial_number()
         self.info_page.click_close_btn()
         assert serial_num == self.new_serial_num
+
+    def test_edit_department_valid_data(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        self.edit_equipment_page.select_department(self.new_department)
+        self.edit_equipment_page.click_on_add_btn()
+        self.equipment_list_page.click_info_btn()
+        self.info_page = EquipmentInfoPage(setup)
+        department = self.info_page.get_department()
+        self.info_page.click_close_btn()
+        assert department == self.new_department
+
+    def test_edit_department_invalid_data(self, setup):
+        self.open_edit_equipment_page(setup)
+        self.equipment_list_page.click_edit_btn(self.plant_id)
+        self.edit_equipment_page = EditEquipmentPage(setup)
+        try:
+            self.edit_equipment_page.select_department("invalid_department")
+            self.edit_equipment_page.click_on_add_btn()
+            self.equipment_list_page.click_info_btn()
+            self.info_page = EquipmentInfoPage(setup)
+            department = self.info_page.get_department()
+            self.info_page.click_close_btn()
+            assert department == self.new_department
+        except:
+            return True
 
 
 

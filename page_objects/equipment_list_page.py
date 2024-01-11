@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class EquipmentListPage:
+    url = "http://127.0.0.1:8000/equipment/equipment-list/"
     tr_num = 1
     info_btn_xpath = f"/html/body/main/div/div/div/div/div[2]/div/table/tbody/tr[{tr_num}]/td[6]/button[1]"
     edit_btn_xpath = "/html/body/main/div/div/div/div/div[2]/div/table/tbody/tr"
