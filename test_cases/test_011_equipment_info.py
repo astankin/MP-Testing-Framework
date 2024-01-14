@@ -71,7 +71,6 @@ class TestEquipmentInfo(TestEditEquipment):
         self.info_page.click_close_btn()
         assert self.driver.current_url == self.equipment_list_page.url
 
-    @pytest.mark.current
     def test_click_service_history(self, setup):
         self.open_equipment_info_page(setup)
         self.info_page.click_service_history_btn()

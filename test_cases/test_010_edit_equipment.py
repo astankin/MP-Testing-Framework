@@ -9,6 +9,7 @@ from page_objects.home_page import HomePage
 from test_cases.conftest import open_form
 from utilities.custom_logger import setup_logger
 from utilities.generate_random_number import generate_random_number
+from utilities.get_db_data import EquipmentData
 from utilities.read_properties import ReadConfig
 
 
@@ -51,6 +52,8 @@ class TestEditEquipment:
         self.edit_equipment_page.set_description(self.description)
         self.edit_equipment_page.click_on_add_btn()
         edited_eq_description = self.equipment_list_page.get_equipment_description()
+        description = EquipmentData(self.equipment_id).get_description()
+        assert eq_description == description
         assert edited_eq_description == self.description
 
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -141,6 +144,7 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert model_num == self.new_model_num
 
+    @pytest.mark.current
     def test_edit_part_number(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)

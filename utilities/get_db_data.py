@@ -42,3 +42,25 @@ class GetData:
 
     def get_all_equipment(self):
         pass
+
+
+class EquipmentData(GetData):
+
+    def __init__(self, id):
+        super().__init__()
+        self.id = id
+
+    def get_description(self):
+        table_name = 'equipment_equipment'
+        column_name = "description"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {self.id}"
+
+        self.cursor.execute(select_names_query)
+        description = self.cursor.fetchone()[0]
+        return description
+
+
+def get_all_users(self):
+    table_name = 'accounts_profile'
+    pass
