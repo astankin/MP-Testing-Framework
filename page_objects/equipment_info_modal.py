@@ -18,6 +18,7 @@ class EquipmentInfoPage:
     create_mp_xpath = ".//tr[10]/td[2]/a"
     value_xpath = "//*[@id='myModal26']/div/div/div[2]/table/tbody/tr[9]/td[2]"
     close_btn_xpath = f"//*[@id='myModal{eq_id}']/div/div/div[3]/button"
+    service_history_btn = f"//*[@id='myModal{eq_id}']/div/div/div[3]/a"
 
     def __init__(self, driver):
         self.driver = driver
@@ -66,3 +67,7 @@ class EquipmentInfoPage:
     def click_create_mp(self):
         create_mp = self.modal.find_element(By.XPATH, self.create_mp_xpath)
         create_mp.click()
+
+    def click_service_history_btn(self):
+        service_history_btn = self.modal.find_element(By.XPATH, self.service_history_btn)
+        service_history_btn.click()

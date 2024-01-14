@@ -14,6 +14,8 @@ class TestEquipmentInfo(TestEditEquipment):
     logger = setup_logger(log_file_path='logs/register_account.log')
     login_username = ReadConfig.get_user()
     login_password = ReadConfig.get_password()
+    service_history_url = "http://127.0.0.1:8000/service-history/"
+    create_mp_url = "http://127.0.0.1:8000/mp/create/"
 
     def open_equipment_info_page(self, setup):
         open_form(setup, self.base_url, self.logger, self.login_username, self.login_password)
@@ -62,10 +64,15 @@ class TestEquipmentInfo(TestEditEquipment):
     def test_click_create_mp(self, setup):
         self.open_equipment_info_page(setup)
         self.info_page.click_create_mp()
-        assert self.driver.current_url == f"http://127.0.0.1:8000/mp/create/{self.equipment_id}/"
+        assert self.driver.current_url == f"{self.create_mp_url}{self.equipment_id}/"
 
-    @pytest.mark.current
     def test_click_close_btn(self, setup):
         self.open_equipment_info_page(setup)
         self.info_page.click_close_btn()
         assert self.driver.current_url == self.equipment_list_page.url
+
+    @pytest.mark.current
+    def test_click_service_history(self, setup):
+        self.open_equipment_info_page(setup)
+        self.info_page.click_service_history_btn()
+        assert self.driver.current_url == f"{self.service_history_url}{self.equipment_id}/"
