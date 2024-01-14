@@ -21,6 +21,67 @@ class GetData:
         cursor = connection.cursor()
         return cursor
 
+
+class EquipmentData(GetData):
+
+    def __init__(self):
+        super().__init__()
+
+    def get_eq_description(self, id):
+        table_name = 'equipment_equipment'
+        column_name = "description"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {id}"
+
+        self.cursor.execute(select_names_query)
+        description = self.cursor.fetchone()[0]
+        return description
+
+    def get_eq_type(self, id):
+        table_name = 'equipment_equipment'
+        column_name = "type"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {id}"
+
+        self.cursor.execute(select_names_query)
+        eq_type = self.cursor.fetchone()[0]
+        return eq_type
+
+    def get_eq_acquisition_value(self, id):
+        table_name = 'equipment_equipment'
+        column_name = "acquisition_value"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {id}"
+
+        self.cursor.execute(select_names_query)
+        value = self.cursor.fetchone()[0]
+        return value
+
+    def get_currency(self, id):
+        table_name = 'equipment_equipment'
+        column_name = "currency_code"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {id}"
+
+        self.cursor.execute(select_names_query)
+        currency = self.cursor.fetchone()[0]
+        return currency
+
+    def get_manufacturer(self, id):
+        table_name = 'equipment_equipment'
+        column_name = "manufacturer"
+
+        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {id}"
+
+        self.cursor.execute(select_names_query)
+        manufacturer = self.cursor.fetchone()[0]
+        return manufacturer
+
+
+class PlantsData(GetData):
+    def __init__(self):
+        super().__init__()
+
     def get_all_plants(self):
         table_name = 'plant_plant'
         column_name = "name"
@@ -32,35 +93,3 @@ class GetData:
         plants = [plant[0] for plant in all_plants]
 
         return list(plant for plant in plants)
-
-    def get_all_users(self):
-        table_name = 'accounts_profile'
-        pass
-
-    def get_all_departments(self):
-        pass
-
-    def get_all_equipment(self):
-        pass
-
-
-class EquipmentData(GetData):
-
-    def __init__(self, id):
-        super().__init__()
-        self.id = id
-
-    def get_description(self):
-        table_name = 'equipment_equipment'
-        column_name = "description"
-
-        select_names_query = f"SELECT {column_name} FROM {table_name} WHERE id = {self.id}"
-
-        self.cursor.execute(select_names_query)
-        description = self.cursor.fetchone()[0]
-        return description
-
-
-def get_all_users(self):
-    table_name = 'accounts_profile'
-    pass

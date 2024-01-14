@@ -14,7 +14,6 @@ from utilities.read_properties import ReadConfig
 
 
 class TestEditEquipment:
-
     base_url = ReadConfig.get_application_url()
     logger = setup_logger(log_file_path='logs/register_account.log')
     login_username = ReadConfig.get_user()
@@ -52,7 +51,7 @@ class TestEditEquipment:
         self.edit_equipment_page.set_description(self.description)
         self.edit_equipment_page.click_on_add_btn()
         edited_eq_description = self.equipment_list_page.get_equipment_description()
-        description = EquipmentData(self.equipment_id).get_description()
+        description = EquipmentData().get_eq_description(self.equipment_id)
         assert eq_description == description
         assert edited_eq_description == self.description
 
@@ -71,6 +70,7 @@ class TestEditEquipment:
         self.edit_equipment_page.select_type(self.eq_type[eq_type])
         self.edit_equipment_page.click_on_add_btn()
         edited_eq_type = self.equipment_list_page.get_equipment_type()
+        eq_type = EquipmentData().get_eq_type(self.equipment_id)
         assert edited_eq_type == self.eq_type[eq_type]
 
         eq_type = self.equipment_list_page.get_equipment_type()
@@ -89,9 +89,9 @@ class TestEditEquipment:
         self.edit_equipment_page.click_on_add_btn()
         self.equipment_list_page.click_info_btn()
         self.info_page = EquipmentInfoPage(setup)
-        acq_value = self.info_page.get_value()
         self.info_page.click_close_btn()
-        assert acq_value == f"{self.new_value:.2f} BGN"
+        value = EquipmentData().get_eq_acquisition_value(self.equipment_id)
+        assert self.new_value == value
 
     def test_edit_currency(self, setup):
         self.open_edit_equipment_page(setup)
@@ -103,6 +103,8 @@ class TestEditEquipment:
         self.info_page = EquipmentInfoPage(setup)
         currency = self.info_page.get_currency()
         self.info_page.click_close_btn()
+        curr = EquipmentData().get_currency(self.equipment_id)
+        assert curr == self.new_currency
         assert currency == self.new_currency
 
     def test_edit_year_of_manufacturing(self, setup):
@@ -118,6 +120,7 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert year_of_man == self.new_year
 
+    @pytest.mark.current
     def test_edit_manufacturer(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -127,8 +130,8 @@ class TestEditEquipment:
         self.edit_equipment_page.click_on_add_btn()
         self.equipment_list_page.click_info_btn()
         self.info_page = EquipmentInfoPage(setup)
-        manufacturer = self.info_page.get_manufacturer()
         self.info_page.click_close_btn()
+        manufacturer = EquipmentData().get_manufacturer(self.equipment_id)
         assert manufacturer == self.new_manufacturer
 
     def test_edit_model_number(self, setup):
@@ -144,7 +147,6 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert model_num == self.new_model_num
 
-    @pytest.mark.current
     def test_edit_part_number(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
@@ -197,11 +199,3 @@ class TestEditEquipment:
             assert department == self.new_department
         except:
             return True
-
-
-
-
-
-
-
-
