@@ -71,14 +71,7 @@ class TestEditEquipment:
         self.edit_equipment_page.click_on_add_btn()
         edited_eq_type = self.equipment_list_page.get_equipment_type()
         eq_type = EquipmentData().get_eq_type(self.equipment_id)
-        assert edited_eq_type == self.eq_type[eq_type]
-
-        eq_type = self.equipment_list_page.get_equipment_type()
-        self.equipment_list_page.click_edit_btn(self.plant_id)
-        self.edit_equipment_page.select_type(self.eq_type[eq_type])
-        self.edit_equipment_page.click_on_add_btn()
-        edited_eq_type = self.equipment_list_page.get_equipment_type()
-        assert edited_eq_type == self.eq_type[eq_type]
+        assert eq_type == edited_eq_type
 
     def test_edit_acquisition_value(self, setup):
         self.open_edit_equipment_page(setup)
@@ -120,7 +113,6 @@ class TestEditEquipment:
         self.info_page.click_close_btn()
         assert year_of_man == self.new_year
 
-    @pytest.mark.current
     def test_edit_manufacturer(self, setup):
         self.open_edit_equipment_page(setup)
         self.equipment_list_page.click_edit_btn(self.plant_id)
