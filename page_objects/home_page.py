@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class HomePage:
+    url = "http://127.0.0.1:8000/"
     create_user_xpath = "//*[@id='sidebarMenu']/div/div/a[1]"
     users_list_xpath = "//*[@id='sidebarMenu']/div/div/a[2]"
     create_plant_xpath = "//*[@id='sidebarMenu']/div/div/a[3]"
@@ -9,6 +10,8 @@ class HomePage:
     departments_xpath = "//*[@id='sidebarMenu']/div/div/a[5]"
     create_equipment_xpath = "//*[@id='sidebarMenu']/div/div/a[6]"
     equipment_list_xpath = "//*[@id='sidebarMenu']/div/div/a[8]"
+    profile_link_xpath = "//*[@id='navbarColor01']/ul/li/div/a"
+    logout_btn_xpath = "//*[@id='navbarColor01']/ul/li/div/div/a[3]"
 
     def __init__(self, driver):
         self.driver = driver
@@ -40,3 +43,11 @@ class HomePage:
     def click_on_equipment_list(self):
         equipment_list_btn = self.driver.find_element(By.XPATH, self.equipment_list_xpath)
         self.driver.execute_script("arguments[0].click();", equipment_list_btn)
+
+    def click_on_profile_link(self):
+        profile_link = self.driver.find_element(By.XPATH, self.profile_link_xpath)
+        profile_link.click()
+
+    def click_on_logout_btn(self):
+        logout_btn = self.driver.find_element(By.XPATH, self.logout_btn_xpath)
+        logout_btn.click()

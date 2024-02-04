@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class LoginPage:
+    url = "http://127.0.0.1:8000/user/login/"
     username_field_xpath = "//*[@id='id_username']"
     password_field_xpath = "//*[@id='id_password']"
     sign_in_btn_xpath = "/html/body/main/div/div/div/div/div[2]/form/button"

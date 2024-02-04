@@ -14,6 +14,7 @@ from page_objects.register_page import RegisterUserPage
 from page_objects.users_list_page import UsersListPage
 from utilities.custom_logger import setup_logger
 from utilities.email_generator import generate_random_email
+from utilities.get_db_data import UserData
 from utilities.password_generator import generate_random_password
 from utilities.read_properties import ReadConfig
 from utilities.username_generator import generate_random_username
@@ -68,10 +69,7 @@ class TestAccountRegister:
         self.logger.info("Loading register page")
         self.register_page = RegisterUserPage(self.driver)
         self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
-        try:
-            self.confirm_msg = self.register_page.get_confirm_message()
-        except:
-            pass
+        self.confirm_msg = self.register_page.get_confirm_message()
 
         if self.confirm_msg == f"Account for {self.username} created successfully.":
             self.logger.info("Registration PASSED")
@@ -83,6 +81,21 @@ class TestAccountRegister:
             self.logger.info("Registration FAILED")
             assert False
         self.logger.info("*** test_002_AccountRegistration finished ***")
+
+    def test_register_new_user_exists_in_database(self, setup):
+        self.open_register_form(setup)
+        self.logger.info("Loading register page")
+        self.register_page = RegisterUserPage(self.driver)
+        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+
+        user_data = UserData()
+        last_created_user_id = user_data.get_last_user_id()
+        user_username = user_data.get_user_username(last_created_user_id)
+        user_email = user_data.get_email(last_created_user_id)
+        user_role = user_data.get_role(last_created_user_id)
+        assert user_username == self.username
+        assert user_email == self.email
+        assert user_role == self.role.upper()
 
     def test_register_user_with_username_less_then_4(self, setup):
         self.logger.info("Starting test with username less then 4 chars")
@@ -582,5 +595,3 @@ class TestAccountRegister:
             self.driver.save_screenshot(screenshot_path)
             self.logger.info("Registration FAILED")
             assert False
-
-

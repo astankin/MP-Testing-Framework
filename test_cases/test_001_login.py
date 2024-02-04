@@ -41,8 +41,6 @@ class TestLogin:
             assert False
         self.logger.info("**** End of the login test with correct data ****")
 
-
-
     def test_login_with_invalid_data(self, setup):
         self.driver = setup
         self.driver.get(self.base_url)
@@ -105,4 +103,3 @@ class TestLogin:
             self.driver.save_screenshot(os.path.abspath(os.curdir) + "\\screenshots" + "\\test_login.png")
             assert False
         self.logger.info("**** End of the login with invalid password ****")
-

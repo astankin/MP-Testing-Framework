@@ -93,3 +93,59 @@ class PlantsData(GetData):
         plants = [plant[0] for plant in all_plants]
 
         return list(plant for plant in plants)
+
+
+class UserData(GetData):
+    TABLE_NAME = "accounts_appuser"
+    COLUM_ID = "id"
+    COLUM_USERNAME = 'username'
+    COLUM_FIRST_NAME = "first_name"
+    COLUM_LAST_NAME = "last_name"
+    COLUM_EMAIL = "email"
+    COLUM_ROLE = "role"
+
+    def __init__(self):
+        super().__init__()
+
+    def get_last_user_id(self):
+        select_users = f"SELECT {self.COLUM_ID} FROM {self.TABLE_NAME} ORDER BY id DESC"
+        self.cursor.execute(select_users)
+        last_created_user_id = self.cursor.fetchone()[0]
+        return last_created_user_id
+
+    def get_user_username(self, user_id):
+        select_user = f"SELECT {self.COLUM_USERNAME} FROM {self.TABLE_NAME} WHERE id = {user_id}"
+        self.cursor.execute(select_user)
+        username = self.cursor.fetchone()[0]
+        return username
+
+    def get_first_name(self, user_id):
+        select_user = f"SELECT {self.COLUM_FIRST_NAME} FROM {self.TABLE_NAME} WHERE id = {user_id}"
+        self.cursor.execute(select_user)
+        first_name = self.cursor.fetchone()[0]
+        return first_name
+
+    def get_last_name(self, user_id):
+        select_user = f"SELECT {self.COLUM_LAST_NAME} FROM {self.TABLE_NAME} WHERE id = {user_id}"
+        self.cursor.execute(select_user)
+        last_name = self.cursor.fetchone()[0]
+        return last_name
+
+    def get_email(self, user_id):
+        select_user = f"SELECT {self.COLUM_EMAIL} FROM {self.TABLE_NAME} WHERE id = {user_id}"
+        self.cursor.execute(select_user)
+        email = self.cursor.fetchone()[0]
+        return email
+
+    def get_role(self, user_id):
+        select_user = f"SELECT {self.COLUM_ROLE} FROM {self.TABLE_NAME} WHERE id = {user_id}"
+        self.cursor.execute(select_user)
+        role = self.cursor.fetchone()[0]
+        return role
+
+
+if __name__ == "__main__":
+    data = UserData()
+    user_id = data.get_last_user_id()
+    print(data.get_user_username(user_id))
+    print(data.get_first_name(user_id))
