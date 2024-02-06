@@ -68,7 +68,6 @@ class TestLogout:
         self.driver.get(self.base_url)
         assert self.driver.current_url == self.homepage.url
 
-    @pytest.mark.current
     def test_logout_and_browsing_back(self, setup):
         self.logout(setup)
         self.driver.back()

@@ -27,6 +27,8 @@ class TestAccountRegister:
     login_password = ReadConfig.get_password()
     username = generate_random_username(5)
     email = username + "@yahoo.com"
+    first_name = "Atanas"
+    last_name = "Stankin"
     password = ReadConfig.get_password()
     conf_password = ReadConfig.get_password()
     role = "Operator"
@@ -68,7 +70,7 @@ class TestAccountRegister:
 
         self.logger.info("Loading register page")
         self.register_page = RegisterUserPage(self.driver)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.confirm_msg = self.register_page.get_confirm_message()
 
         if self.confirm_msg == f"Account for {self.username} created successfully.":
@@ -86,7 +88,7 @@ class TestAccountRegister:
         self.open_register_form(setup)
         self.logger.info("Loading register page")
         self.register_page = RegisterUserPage(self.driver)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
 
         user_data = UserData()
         last_created_user_id = user_data.get_last_user_id()
@@ -103,7 +105,7 @@ class TestAccountRegister:
         self.register_page = RegisterUserPage(self.driver)
         self.username = generate_random_username(3)
         self.email = generate_random_email()
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name ,self.role, self.password, self.conf_password)
 
         expected_message = f"Ensure this value has at least 4 characters (it has {len(self.username)})."
         try:
@@ -122,7 +124,7 @@ class TestAccountRegister:
         self.register_page = RegisterUserPage(self.driver)
         self.username = ""
         self.email = generate_random_email()
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name ,self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Please fill out this field."
         try:
@@ -140,7 +142,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with existing username ****")
         self.register_page = RegisterUserPage(self.driver)
         self.email = generate_random_email()
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
 
         expected_message = f"User with this Username already exists."
         try:
@@ -156,7 +158,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with username contains white space ****")
         self.register_page = RegisterUserPage(self.driver)
         self.email = generate_random_email()
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         expected_message = f"The user name can contains only letters or digits."
         try:
             error_msg = self.register_page.get_username_error_msg()
@@ -173,7 +175,7 @@ class TestAccountRegister:
         not_allowed_chars = []
         for username in usernames_with_char:
             self.email = generate_random_email()
-            self.register_page.register(username, self.email, self.role, self.password, self.conf_password)
+            self.register_page.register(username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
 
             expected_message = f"Username '{username}' is invalid, can only contain letters or digits."
             try:
@@ -194,7 +196,7 @@ class TestAccountRegister:
         self.register_page = RegisterUserPage(self.driver)
         self.email = generate_random_email()
 
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         expected_message = f"Account for {self.username} created successfully."
         try:
             conf_message = self.register_page.get_confirm_message()
@@ -210,7 +212,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with empty email field ****")
         self.email = ""
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Please fill out this field."
         try:
@@ -228,7 +230,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email withouth @ symbol ****")
         self.email = "john.doe.gmail.com"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Please include an '@' in the email address. '{self.email}' is missing an '@'."
         try:
@@ -245,7 +247,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email without domain ****")
         self.email = "john.doe@gmail"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email,self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Enter a valid email address."
         try:
@@ -262,7 +264,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email withouth @ symbol ****")
         self.email = "@" + generate_random_email().split('@')[1]
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email,self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Please enter a part followed by '@'. '{self.email}' is incomplete."
         try:
@@ -279,7 +281,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email withouth @ symbol ****")
         self.email = generate_random_email() + ".co.uk"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email,self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Account for {self.username} created successfully."
         try:
@@ -296,7 +298,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email contain more then one @ symbol ****")
         self.email = generate_random_email() + "@" + ".co.uk"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email,self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"A part following '@' should not contain the symbol '@'."
         try:
@@ -318,7 +320,7 @@ class TestAccountRegister:
         for email in emails:
             self.username = generate_random_username(6)
             self.email = email + domain
-            self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+            self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
 
             expected_message = f"A part followed by '@' should not contain the symbol '{email[-1]}'."
             try:
@@ -337,7 +339,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email name contain white space ****")
         self.email = generate_random_username(3) + " " + generate_random_email()
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"A part followed by '@' should not contain the symbol ' '."
         try:
@@ -354,7 +356,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email name contain white space ****")
         self.email = str(random.randint(100000, 999999)) + "@" + "yahoo.com"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Enter a valid email address."
         try:
@@ -371,7 +373,7 @@ class TestAccountRegister:
         self.logger.info("**** Test register user with email domain name contain white space ****")
         self.email = 'john.doe' + "@" + str(random.randint(100000, 999999)) + ".com"
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Enter a valid email address."
         try:
@@ -390,7 +392,7 @@ class TestAccountRegister:
                      str(random.randint(100000, 999999)) + "." + \
                      str(random.randint(100000, 999999))
         self.username = generate_random_username(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = f"Enter a valid email address."
         try:
@@ -411,7 +413,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = self.username
         self.conf_password = self.username
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "The password is too similar to the username."
         try:
@@ -431,7 +433,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = generate_random_password(7)
         self.conf_password = self.password
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "This password is too short. It must contain at least 8 characters."
         try:
@@ -452,7 +454,7 @@ class TestAccountRegister:
             self.email = generate_random_email()
             self.password = password
             self.conf_password = password
-            self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+            self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
             self.driver = setup
             expected_message = "This password is too common."
             try:
@@ -474,7 +476,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = generate_random_password(8)
         self.conf_password = generate_random_password(7)
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "The two password fields didn’t match."
         try:
@@ -494,7 +496,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = generate_random_password(40)
         self.conf_password = self.password
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "The password is too long."
         try:
@@ -513,7 +515,7 @@ class TestAccountRegister:
         self.username = generate_random_username(7)
         self.email = generate_random_email()
         self.conf_password = ""
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "Please fill out this field."
         try:
@@ -533,7 +535,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = random.randint(10000000, 99999999)
         self.conf_password = self.password
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email,self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "This password is entirely numeric."
         try:
@@ -554,7 +556,7 @@ class TestAccountRegister:
         self.email = generate_random_email()
         self.password = generate_random_password(4) + " " + generate_random_password(4)
         self.conf_password = self.password
-        self.register_page.register(self.username, self.email, self.role, self.password, self.conf_password)
+        self.register_page.register(self.username, self.email, self.first_name, self.last_name, self.role, self.password, self.conf_password)
         self.driver = setup
         expected_message = "This is invalid password"
         try:
@@ -565,7 +567,6 @@ class TestAccountRegister:
                           attachment_type=AttachmentType.PNG)
             raise AssertionError("The password can NOT contains white space.")
 
-    @pytest.mark.sanity
     def test_create_plant_with_valid_data_click_cancel(self, setup):
         self.open_register_form(setup)
         self.home_page.click_on_users_list()
@@ -595,3 +596,5 @@ class TestAccountRegister:
             self.driver.save_screenshot(screenshot_path)
             self.logger.info("Registration FAILED")
             assert False
+
+    #TODO Tests for the first_name and last_name to be added
