@@ -18,6 +18,8 @@ class RegisterUserPage:
     add_btn_xpath = "/html/body/main/div/div/div/div/div[2]/form/div[8]/button"
     confirmation_message_xpath = "/html/body/main/div/div/div/div/h3"
     username_error_msg = '//*[@id="error_1_id_username"]/strong'
+    firstname_error_msg = '//*[@id="error_1_id_first_name"]/strong'
+    last_name_error_msg = '//*[@id="error_1_id_last_name"]/strong'
     email_error_msg = "//*[@id='error_1_id_email']/strong"
     password_error_msg = "//*[@id='error_1_id_password2']/strong"
     cancel_btn_xpath = "/html/body/main/div/div/div/div/div[2]/form/div[8]/a"
@@ -79,6 +81,18 @@ class RegisterUserPage:
 
     def get_username_validation_msg(self):
         return self.driver.find_element(By.ID, self.username_input_id).get_attribute("validationMessage")
+
+    def get_first_name_error_msg(self):
+        return self.driver.find_element(By.XPATH, self.firstname_error_msg)
+
+    def get_last_name_error_msg(self):
+        return self.driver.find_element(By.XPATH, self.last_name_error_msg)
+
+    def get_first_name_validation_msg(self):
+        return self.driver.find_element(By.ID, self.first_name_id).get_attribute("validationMessage")
+
+    def get_last_name_validation_msg(self):
+        return self.driver.find_element(By.ID, self.last_name_id).get_attribute("validationMessage")
 
     def get_email_validation_msg(self):
         return self.driver.find_element(By.ID, self.email_input_id).get_attribute("validationMessage")
