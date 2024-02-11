@@ -23,9 +23,35 @@ class RegisterUserPage:
     email_error_msg = "//*[@id='error_1_id_email']/strong"
     password_error_msg = "//*[@id='error_1_id_password2']/strong"
     cancel_btn_xpath = "/html/body/main/div/div/div/div/div[2]/form/div[8]/a"
+    username_label_xpath = "//*[@id='div_id_username']/label"
+    email_label_xpath = "//*[@id='div_id_email']/label"
+    f_name_label_xpath = "//*[@id='div_id_first_name']/label"
+    l_name_label_xpath = "//*[@id='div_id_last_name']/label"
+    role_label_xpath = "//*[@id='div_id_role']/label"
 
     def __init__(self, driver):
         self.driver = driver
+
+    def get_username_label(self):
+        return self.driver.find_element(By.XPATH, self.username_label_xpath).text
+
+    def get_email_label(self):
+        return self.driver.find_element(By.XPATH, self.email_label_xpath).text
+
+    def get_f_name_label(self):
+        return self.driver.find_element(By.XPATH, self.f_name_label_xpath).text
+
+    def get_l_name_label(self):
+        return self.driver.find_element(By.XPATH, self.l_name_label_xpath).text
+
+    def get_role_label(self):
+        return self.driver.find_element(By.XPATH, self.role_label_xpath).text
+
+    def get_password(self):
+        return self.driver.find_element(By.ID, self.password_input_id)
+
+    def get_conf_password(self):
+        return self.driver.find_element(By.ID, self.conf_password_input_id)
 
     def set_username(self, username):
         self.driver.find_element(By.XPATH, self.username_input_xpath).send_keys(username)

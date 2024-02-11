@@ -104,6 +104,41 @@ class TestAccountRegister:
         assert last_name == self.last_name
         assert user_role == self.role.upper()
 
+    def test_username_label(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        username_label = self.register_page.get_username_label()
+        expected_username_label = "Username*"
+        assert username_label == expected_username_label
+
+    def test_email_label(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        email_label = self.register_page.get_email_label()
+        expected_email_label = "Email*"
+        assert email_label == expected_email_label
+
+    def test_first_name_label(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        f_name_label = self.register_page.get_f_name_label()
+        expected_f_name_label = "First name*"
+        assert f_name_label == expected_f_name_label
+
+    def test_last_name_label(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        l_name_label = self.register_page.get_l_name_label()
+        expected_l_name_label = "Last name*"
+        assert l_name_label == expected_l_name_label
+
+    def test_role_label(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        role_label = self.register_page.get_role_label()
+        expected_role_label = "Role*"
+        assert role_label == expected_role_label
+
     def test_register_user_with_username_less_then_4(self, setup):
         self.logger.info("Starting test with username less then 4 chars")
         self.open_register_form(setup)
@@ -553,6 +588,28 @@ class TestAccountRegister:
             allure.attach(self.driver.get_screenshot_as_png(), name="test_username_less_then_5",
                           attachment_type=AttachmentType.PNG)
             raise AssertionError("The username can NOT be less then 4 characters")
+
+    def test_register_user_verify_masked_password(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        self.username = generate_random_username(7)
+        self.email = generate_random_email()
+        self.register_page.set_username(self.username)
+        self.register_page.set_email(self.email)
+        self.register_page.set_password(self.password)
+        password_input = self.register_page.get_password()
+        assert password_input.get_attribute("type") == "password"
+
+    def test_register_user_verify_masked_password(self, setup):
+        self.open_register_form(setup)
+        self.register_page = RegisterUserPage(self.driver)
+        self.username = generate_random_username(7)
+        self.email = generate_random_email()
+        self.register_page.set_username(self.username)
+        self.register_page.set_email(self.email)
+        self.register_page.set_password(self.password)
+        conf_password_input = self.register_page.get_conf_password()
+        assert conf_password_input.get_attribute("type") == "password"
 
     def test_register_user_with_password_contains_only_numbers(self, setup):
         self.logger.info("Starting test with password entirely numeric")
